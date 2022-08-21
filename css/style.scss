@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+}
+
+.game-card {
+  cursor: pointer;
+  opacity: 0.8;
+
+  &:hover {
+    border: 2px solid green;
+    opacity: 1;
+  }
+}
+
+.clicked {
+  opacity: 1;
+  border: 1px solid gold;
+}
