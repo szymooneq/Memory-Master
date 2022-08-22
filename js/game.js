@@ -17,59 +17,55 @@ function load_data(database) {
   return game_data;
 }
 
-load_data(witcher_database);
-console.log(game_data);
+const board = document.querySelector('.game-board');
+board.addEventListener('click', revealCard);
 
-const cards = document.querySelectorAll('.game-card img');
-cards.forEach(card => {
-  card.addEventListener('click', revealCard);
-})
+load_data(witcher_database);
+//console.log(game_data);
 
 function revealCard(e) {
-  const playerClick = e.target;
-  const gameCard = playerClick.parentNode;
-  const gameCardId = gameCard.getAttribute('data-id');
+  if(e.target.classList.contains('play')) {
 
-  playerClick.removeEventListener('click', revealCard);
-  playerClick.src = game_data[gameCardId];
+    const playerClick = e.target.children[0];
+    const gameCardId = playerClick.parentNode.getAttribute('data-id');
 
-  // check selectedClick is exist?
-  if(selectedClick) {
-    // (selectedClick exist) compare with second element
-
-    if(playerClick.src == selectedClick.src) {
-      console.log('matched')
+    playerClick.src = game_data[gameCardId];
+    playerClick.parentNode.classList.toggle('play');
+    playerClick.parentNode.classList.toggle('active');
+    
+    // check selectedClick is exist?
+    if(!selectedClick) {
+      // (selectedClick don't exist) create them
+      selectedClick = playerClick;
+      
     } else {
-      console.log('not matched');
+      // (selectedClick exist) compare with second element
 
-      setTimeout(() => {
+      if(playerClick.src == selectedClick.src) {
+        console.log('matched')
+        board.removeEventListener('click', revealCard);
 
-        playerClick.addEventListener('click', revealCard);
-        selectedClick.addEventListener('click', revealCard);
-        
-        playerClick.src = "img/karta.png";
-        selectedClick.src = "img/karta.png";
+        setTimeout(() => {
+          board.addEventListener('click', revealCard);
+          selectedClick = undefined;
+        }, 500)
 
-        playerClick.parentNode.classList.toggle('clicked');
-        playerClick.parentNode.classList.toggle('game-card');
+      } else {
+        console.log('not matched');
+        board.removeEventListener('click', revealCard);
 
-        selectedClick.parentNode.classList.toggle('clicked');
-        selectedClick.parentNode.classList.toggle('game-card');
-        
-      }, 5000);
+        setTimeout(() => {
+          playerClick.src = "...";
+          selectedClick.src = "...";
 
+          playerClick.parentNode.classList.toggle('play');
+          playerClick.parentNode.classList.toggle('active');
+          selectedClick.parentNode.classList.toggle('play');
+          selectedClick.parentNode.classList.toggle('active');
+          selectedClick = undefined;
+          board.addEventListener('click', revealCard);
+        }, 500)
+      }   
     }
-
-    selectedClick = undefined;
-  } else {
-    // (selectedClick don't exist) create them
-    selectedClick = playerClick;
   }
-
-  gameCard.classList.toggle('clicked');
-  gameCard.classList.toggle('game-card');
-
-  
-  //console.log(playerClick);
-  //console.log(gameCard);
 }
