@@ -1,7 +1,30 @@
 //console.log(document.querySelector('.game-card').children[0].attributes.src.value);
 let witcher_database = ["img/ciri.png", "img/geralt.png", "img/iorveth.png" , "img/jaskier.png", "img/triss.png", "img/yennefer.png"];
 let game_data = [];
+let seconds = 0;
+let minutes = 0;
 let selectedClick = "";
+let points = 0;
+
+const main = document.querySelector('.main');
+const board = document.querySelector('.game-board');
+const timer = document.querySelector('.timer');
+const score = document.querySelector('.score');
+
+board.addEventListener('click', revealCard);
+
+function Timer() {
+  if (seconds == 59) {
+    seconds = -1;
+    minutes++;
+  }
+  seconds++;
+
+  minutes<10 ? timer.children[0].innerHTML = `0${minutes}` : timer.children[1].innerHTML = `${minutes}`;
+  seconds<10 ? timer.children[1].innerHTML = `0${seconds}` : timer.children[1].innerHTML = `${seconds}`;
+}
+
+setInterval(Timer, 1000);
 
 function load_data(database) {
   game_data = [...database, ...database];
@@ -17,11 +40,7 @@ function load_data(database) {
   return game_data;
 }
 
-const board = document.querySelector('.game-board');
-board.addEventListener('click', revealCard);
-
 load_data(witcher_database);
-//console.log(game_data);
 
 function revealCard(e) {
   if(e.target.classList.contains('play')) {
@@ -40,9 +59,7 @@ function revealCard(e) {
       
     } else {
       // (selectedClick exist) compare with second element
-
       if(playerClick.src == selectedClick.src) {
-        console.log('matched')
         board.removeEventListener('click', revealCard);
 
         setTimeout(() => {
@@ -50,8 +67,10 @@ function revealCard(e) {
           selectedClick = undefined;
         }, 500)
 
+        points++;
+        score.innerHTML = `${points} points`;
+
       } else {
-        console.log('not matched');
         board.removeEventListener('click', revealCard);
 
         setTimeout(() => {
@@ -60,9 +79,11 @@ function revealCard(e) {
 
           playerClick.parentNode.classList.toggle('play');
           playerClick.parentNode.classList.toggle('active');
+
           selectedClick.parentNode.classList.toggle('play');
           selectedClick.parentNode.classList.toggle('active');
           selectedClick = undefined;
+
           board.addEventListener('click', revealCard);
         }, 500)
       }   
