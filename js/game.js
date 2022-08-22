@@ -1,5 +1,5 @@
 //console.log(document.querySelector('.game-card').children[0].attributes.src.value);
-let witcher_database = ["img/ciri.png", "img/geralt.png", "img/iorveth.png" , "img/jaskier.png", "img/triss.png", "img/yennefer.png"];
+let witcher_database = ["img/ciri.png", "img/dandelion.png", "img/francesca.png", "img/geralt.png", "img/iorveth.png" , "img/radowid.png", "img/triss.png", "img/yennefer.png"];
 let game_data = [];
 let seconds = 0;
 let minutes = 0;
@@ -10,7 +10,11 @@ const main = document.querySelector('.main');
 const board = document.querySelector('.game-board');
 const timer = document.querySelector('.timer');
 const score = document.querySelector('.score');
+const restart = document.querySelector('.restart');
 
+restart.addEventListener('click', () => {
+  window.location.reload(false)
+});
 board.addEventListener('click', revealCard);
 
 function Timer() {
@@ -65,7 +69,7 @@ function revealCard(e) {
         setTimeout(() => {
           board.addEventListener('click', revealCard);
           selectedClick = undefined;
-        }, 500)
+        }, 300)
 
         points++;
         score.innerHTML = `${points} points`;
@@ -85,7 +89,7 @@ function revealCard(e) {
           selectedClick = undefined;
 
           board.addEventListener('click', revealCard);
-        }, 500)
+        }, 300)
       }   
     }
   }
