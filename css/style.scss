@@ -1,6 +1,10 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: myriad-pro, sans-serif;
   font-weight: 700;
   font-style: normal;
@@ -11,10 +15,7 @@
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-}
-
-body {
-  background: linear-gradient(to bottom right, #21f8dd, #ff00ff);
+  background: linear-gradient(to bottom right, #19fadc, #ff5cff);
 }
 
 header h1 {
@@ -26,8 +27,49 @@ header h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: calc(100vh - 130px);
+  min-height: calc(100vh - 131px);
   margin: 10px 0 10px 0;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%; 
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  overflow: auto;
+  background-color: rgba(156, 11, 156, 0.4);
+}
+
+.modal-content {
+  padding: 20px;
+  margin: 0 10px 0 10px;
+  background-color: black;
+  font-size: 1.5rem;
+  line-height: 30px;
+  text-align: center;
+  color: white;
+
+  button {
+    padding: 5px;
+    margin-top: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid #ffa600;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: .2rem;
+    transition: all .1s ease-in-out;
+  
+    &:hover {
+      cursor: pointer;
+      background-color: #ffa600b4;
+    }
+  }
 }
 
 .game-board {
@@ -46,9 +88,10 @@ header h1 {
   width: 100px;
   margin-top: 10px;
   margin-left: 10px;
-  background-color: #ffffff;
+  background: linear-gradient(to bottom right, #dddddd, #8b8b8b);
   flex-shrink: 0;
   opacity: 0.7;
+  transition: all .5s ease-in-out;
 
   &:hover {
     cursor: pointer;
@@ -73,11 +116,27 @@ header h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 420px;
+  width: 450px;
   height: 50px;
+  padding: 0 15px 0 15px;
   background-color: black;
   color: white;
-  padding: 0 15px 0 15px;
+}
+
+.restart {
+  padding: 4px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: white;
+  background-color: black;
+  border: 1px solid #e92929;
+  transition: all .1s ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e929298f;
+  }
 }
 
 .footer {
@@ -86,4 +145,23 @@ header h1 {
   color: black;
   font-weight: 700;
   padding: 10px;
+
+  a {
+    font-style: italic;
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: black;
+    text-decoration: none;
+  }
+
+  a:link {
+    color: black;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: white;
+  }
 }

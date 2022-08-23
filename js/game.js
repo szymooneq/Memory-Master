@@ -1,38 +1,61 @@
-//console.log(document.querySelector('.game-card').children[0].attributes.src.value);
 let witcher_database = ["img/ciri.png", "img/dandelion.png", "img/francesca.png", "img/geralt.png", "img/iorveth.png" , "img/radowid.png", "img/triss.png", "img/yennefer.png"];
 let game_data = [];
 let seconds = 0;
 let minutes = 0;
 let selectedClick = "";
 let points = 0;
+let leftPairs = 8;
 
 const main = document.querySelector('.main');
 const board = document.querySelector('.game-board');
 const timer = document.querySelector('.timer');
 const score = document.querySelector('.score');
-const restart = document.querySelector('.restart');
+const restart = document.querySelectorAll('#restart');
+const modal = document.querySelector('.modal');
 
-restart.addEventListener('click', () => {
-  window.location.reload(false)
-});
 board.addEventListener('click', revealCard);
+restart.forEach(button => {
+  button.addEventListener('click', () => {
+    window.location.reload(false)
+  })
+});
 
+// START GAME FUNCTIONS
+createBoard();
+loadData(witcher_database);
+const time = setInterval(Timer, 1000);
+
+function createBoard() {
+  for(i=0; i<16; i++) {
+    const boardElement = `<div data-id="${i}" class="game-card play">
+                            <img src="" alt="">
+                          </div>`;
+
+    board.insertAdjacentHTML('beforeend', boardElement);
+  }
+}
+
+// set timer
 function Timer() {
+  minutes = parseInt(minutes);
+  seconds = parseInt(seconds);
+
   if (seconds == 59) {
     seconds = -1;
     minutes++;
   }
   seconds++;
 
-  minutes<10 ? timer.children[0].innerHTML = `0${minutes}` : timer.children[1].innerHTML = `${minutes}`;
-  seconds<10 ? timer.children[1].innerHTML = `0${seconds}` : timer.children[1].innerHTML = `${seconds}`;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  timer.firstElementChild.innerHTML = `${minutes}:${seconds}`;
 }
 
-setInterval(Timer, 1000);
-
-function load_data(database) {
+// load and shuffle data from array (database images)
+function loadData(database) {
   game_data = [...database, ...database];
-  let index = database.length, randomIndex;
+  let index = game_data.length, randomIndex;
 
   while(index != 0) {
     randomIndex = Math.floor(Math.random() * index);
@@ -44,8 +67,7 @@ function load_data(database) {
   return game_data;
 }
 
-load_data(witcher_database);
-
+// function after click on any card
 function revealCard(e) {
   if(e.target.classList.contains('play')) {
 
@@ -63,7 +85,7 @@ function revealCard(e) {
       
     } else {
       // (selectedClick exist) compare with second element
-      if(playerClick.src == selectedClick.src) {
+      if(playerClick.src == selectedClick.src) { //image matched
         board.removeEventListener('click', revealCard);
 
         setTimeout(() => {
@@ -71,10 +93,12 @@ function revealCard(e) {
           selectedClick = undefined;
         }, 300)
 
-        points++;
+        points=points+10;
         score.innerHTML = `${points} points`;
+        leftPairs--;
+        checkWin();
 
-      } else {
+      } else { // not matched
         board.removeEventListener('click', revealCard);
 
         setTimeout(() => {
@@ -90,7 +114,19 @@ function revealCard(e) {
 
           board.addEventListener('click', revealCard);
         }, 300)
-      }   
+
+        points>0 ? points=points-2 : null;
+        score.innerHTML = `${points} points`;
+      }
     }
+  }
+}
+
+// check win
+function checkWin() {
+  if(leftPairs == 0) {
+    modal.style.display = 'flex';
+    modal.children[0].firstElementChild.innerHTML = `You scored ${points} points in ${minutes}:${seconds}, congratulations!🎉`;
+    clearInterval(time);
   }
 }
