@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://use.typekit.net/jnz4pnm.css">
 
   <link rel="stylesheet" href="css/style.css">
-  <script defer="" src="js/game.js"></script>
+  <script defer src="js/game.js"></script>
 </head>
 <body>
 
@@ -20,80 +20,32 @@
   </header>
 
   <div class="modal">
-    <div class="modal-content">
-      <p></p>
-      <button id="restart">Play again</button>
+    <div class="mainMenu">
+
+      <h2>Select game level:</h2>
+      <div class="menuButtons">
+        <button data-level="easy" id="level">Easy</button>
+        <button data-level="medium" id="level">Medium</button>
+        <button data-level="hard" id="level">Hard</button>
+      </div>
+
+      <!-- <p>You scored 1235 points in 12:53, congratulations!🎉</p>
+      <button class="again">Play again</button> -->
     </div>
   </div>
 
-  <div class="main">
+  <div class="mainGame">
 
-    <div class="game-info">
-      <div class="level">LEVEL: EASY ⭐</div>
-      <div>
-        <button id="restart" class="restart">Restart</button>
-      </div>
+    <div class="gameDetails">
+      <div class="level"></div>
+      <div></div>
     </div>
 
-    <div class="game-board">
-      <!-- <div data-id="0" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="1" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="2" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="3" class="game-card play">
-        <img src="" alt="">
-      </div>
-  
-      <div data-id="4" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="5" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="6" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="7" class="game-card play">
-        <img src="" alt="">
-      </div>
-  
-      <div data-id="8" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="9" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="10" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="11" class="game-card play">
-        <img src="" alt="">
-      </div>
+    <div class="gameBoard"></div>
 
-      <div data-id="12" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="13" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="14" class="game-card play">
-        <img src="" alt="">
-      </div>
-      <div data-id="15" class="game-card play">
-        <img src="" alt="">
-      </div> -->
-    </div>
-  
-    <div class="game-info">
-      <div class="timer">
-        <span>00:00</span>
-      </div>
-      <div class="score">0 points</div>
+    <div class="gameDetails">
+      <div class="timer"></div>
+      <div class="score"></div>
     </div>
 
   </div>

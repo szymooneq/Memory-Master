@@ -1,59 +1,77 @@
-let witcher_database = ["img/ciri.png", "img/dandelion.png", "img/francesca.png", "img/geralt.png", "img/iorveth.png" , "img/radowid.png", "img/triss.png", "img/yennefer.png"];
-let game_data = [];
-let seconds = 0;
-let minutes = 0;
-let selectedClick = "";
-let points = 0;
-let leftPairs = 8;
+let database = ["img/ciri.png", "img/dandelion.png", "img/francesca.png", "img/geralt.png", "img/iorveth.png" , "img/radowid.png", "img/triss.png", "img/yennefer.png"];
 
-const main = document.querySelector('.main');
-const board = document.querySelector('.game-board');
-const timer = document.querySelector('.timer');
-const score = document.querySelector('.score');
-const restart = document.querySelectorAll('#restart');
-const modal = document.querySelector('.modal');
+/* let mainGame; let gameBoard
 
-board.addEventListener('click', revealCard);
-restart.forEach(button => {
-  button.addEventListener('click', () => {
-    window.location.reload(false)
-  })
-});
+let level; let cards; let points; */
+let minutes = 0; let seconds = 0;
 
-// START GAME FUNCTIONS
-createBoard();
-loadData(witcher_database);
-const time = setInterval(Timer, 1000);
+const mainMenu = document.querySelector('.mainMenu')
+const selectButtons = document.querySelectorAll('#level')
 
-function createBoard() {
-  for(i=0; i<16; i++) {
-    const boardElement = `<div data-id="${i}" class="game-card play">
-                            <img src="" alt="">
-                          </div>`;
+const mainGame = document.querySelector('.mainGame')
+const gameBoard = document.querySelector('.gameBoard')
+const gameDetails = document.querySelectorAll('.gameDetails')
 
-    board.insertAdjacentHTML('beforeend', boardElement);
+const gameTimer = document.querySelector('.timer')
+
+const restartInfo = document.querySelectorAll('#restart');
+const gameScore = document.querySelector('.score');
+
+const startGame = () => {
+  let modal = mainMenu.parentElement;
+
+  selectButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      level = button.getAttribute('data-level')
+      modal.style.display="none"
+      renderGame(level)
+    })})
+}
+startGame()
+
+const renderGame = (props) => {
+  level = props
+  
+  switch (level) {
+    case "easy":
+      level = "easy ⭐"
+      cards = 16
+      break;
+
+    case "medium":
+      level = "medium ⭐⭐"
+      cards = 30
+      break;
+
+    case "hard":
+      level = "hard ⭐⭐⭐"
+      cards = 42
+      break;
+  
+    default:
+      break;
   }
+
+  setRandomData(database)
+  gameBoard.addEventListener('click', revealCard)
+
+  for(i=0; i<game_data.length; i++) {
+    const boardElement = `<div data-id=${i} class="gameCard play"><img src=${game_data[i]} alt=""></div>`         
+    gameBoard.insertAdjacentHTML('beforeend', boardElement);
+  }
+
+  const gameLevel = gameDetails[0].firstElementChild
+  const gameRestart = gameDetails[0].lastElementChild
+  const gameTimer = gameDetails[1].firstElementChild
+  
+  gameLevel.innerText = "Level: " + level
+  gameRestart.innerHTML = '<button id="restart" class="restart">Restart</button>'
+  gameTimer.innerText = "00:00"
+
+  startTimer = setInterval(Timer, 1000);
 }
 
-// set timer
-function Timer() {
-  minutes = parseInt(minutes);
-  seconds = parseInt(seconds);
-
-  if (seconds == 59) {
-    seconds = -1;
-    minutes++;
-  }
-  seconds++;
-
-  minutes = minutes < 10 ? "0" + minutes : minutes;
-  seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  timer.firstElementChild.innerHTML = `${minutes}:${seconds}`;
-}
-
-// load and shuffle data from array (database images)
-function loadData(database) {
+const setRandomData = (database) => {
   game_data = [...database, ...database];
   let index = game_data.length, randomIndex;
 
@@ -67,9 +85,30 @@ function loadData(database) {
   return game_data;
 }
 
+function Timer() {
+  minutes = parseInt(minutes);
+  seconds = parseInt(seconds);
+
+  if (seconds == 59) {
+    seconds = -1;
+    minutes++;
+  }
+  seconds++;
+
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  gameTimer.innerHTML = `${minutes}:${seconds}`;
+}
+
 // function after click on any card
 function revealCard(e) {
-  if(e.target.classList.contains('play')) {
+  if(e.target.parentNode.classList.contains('play')) { 
+
+    /* const cardId = game_data[e.target.parentNode.getAttribute('data-id')] */
+    const imgId = e.target.getAttribute('src')
+
+    console.log(cardId, imgId)
 
     const playerClick = e.target.children[0];
     const gameCardId = playerClick.parentNode.getAttribute('data-id');
@@ -119,8 +158,10 @@ function revealCard(e) {
         score.innerHTML = `${points} points`;
       }
     }
-  }
+   } 
 }
+
+
 
 // check win
 function checkWin() {
