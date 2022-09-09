@@ -9,7 +9,6 @@ const mainMenu = document.querySelector('.mainMenu')
 const selectButtons = document.querySelectorAll('#level')
 const mainGame = document.querySelector('.mainGame')
 const gameBoard = document.querySelector('.gameBoard')
-const gameDetails = document.querySelectorAll('.gameDetails')
 const gameLevel = document.querySelector('.level')
 const gameTimer = document.querySelector('.timer')
 const gameMoves = document.querySelector('.moves')
@@ -32,7 +31,7 @@ const startGame = () => {
 startGame()
 
 const renderGame = (props) => {
-  level = props
+  let level = props
   let cards
   let boardWidth
   let cardSize
@@ -67,6 +66,9 @@ const renderGame = (props) => {
       boardWidth = "39rem"
       cardSize = "5rem"
       break;
+
+    default:
+      break;
   }
 
   setRandomData(database)
@@ -93,7 +95,7 @@ const setRandomData = (database) => {
   randomArray = [...gameDatabase, ...gameDatabase]
   let index = randomArray.length, randomIndex
 
-  while(index != 0) {
+  while(index !== 0) {
     randomIndex = Math.floor(Math.random() * index)
     index--
     [randomArray[index], randomArray[randomIndex]] = [randomArray[randomIndex], randomArray[index]];
@@ -103,10 +105,10 @@ const setRandomData = (database) => {
 }
 
 function Timer() {
-  minutes = parseInt(minutes);
-  seconds = parseInt(seconds);
+  minutes = parseInt(minutes, 10);
+  seconds = parseInt(seconds, 10);
 
-  if (seconds == 59) {
+  if (seconds === 59) {
     seconds = -1;
     minutes++;
   }
@@ -174,7 +176,7 @@ function revealCard(e) {
         }, 500)
 
         moves+=1
-        points > 0 ? points = points - 2 : null;
+        if(points > 0) points = points - 2
         gameScore.innerText = `${points} points`;
         gameMoves.innerText = `${moves} move count`;
       }
@@ -184,10 +186,10 @@ function revealCard(e) {
 
 const checkWin = () => {
   if(pairs === 0) {
-    modal = mainMenu.parentElement
+    let modal = mainMenu.parentElement
     modal.style.display = 'flex';
 
     mainMenu.innerHTML = `<p>You earned <span class="points">${points} points</span> in <span class="result">${minutes}:${seconds}</span> and <span class="result">${moves} moves</span>, congratulations!🎉</p><button class="again" onclick="window.location.reload()">Play again</button>`
-    stopTimer = clearInterval(startTimer);
+    clearInterval(startTimer);
   }
 }
