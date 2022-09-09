@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,6 @@
 
   <!-- Myriad Font -->
   <link rel="stylesheet" href="https://use.typekit.net/jnz4pnm.css">
-
   <link rel="stylesheet" href="css/style.css">
   <script defer src="js/game.js"></script>
 </head>
@@ -21,39 +20,32 @@
 
   <div class="modal">
     <div class="mainMenu">
-
+      <h1>Memory Master by SD</h1>
       <h2>Select game level:</h2>
       <div class="menuButtons">
         <button data-level="easy" id="level">Easy</button>
         <button data-level="medium" id="level">Medium</button>
         <button data-level="hard" id="level">Hard</button>
       </div>
-
-      <!-- <p>You scored 1235 points in 12:53, congratulations!🎉</p>
-      <button class="again">Play again</button> -->
     </div>
   </div>
 
   <div class="mainGame">
-
     <div class="gameDetails">
       <div class="level"></div>
-      <div></div>
+      <button id="restart" class="restart" onclick="window.location.reload()">Restart</button>
     </div>
-
     <div class="gameBoard"></div>
-
     <div class="gameDetails">
       <div class="timer"></div>
+      <div class="moves"></div>
       <div class="score"></div>
     </div>
-
   </div>
 
   <footer>
     <span class="footer">created with 🤍 by <a href="#">Szymon Dudka</a></span>
   </footer>
-  
   
 </body>
 </html>

@@ -1,25 +1,26 @@
-let database = ["img/ciri.png", "img/dandelion.png", "img/francesca.png", "img/geralt.png", "img/iorveth.png" , "img/radowid.png", "img/triss.png", "img/yennefer.png"];
+let database = ["url(img/b_ciri.jpg)", "url(img/f_foltest.jpg)", "url(img/g_braen.jpg)", "url(img/r_detlaff.jpg)", "url(img/v_bear.jpg)", "url(img/b_dandelion.jpg)", "url(img/f_keira.jpg)", "url(img/g_francesca.jpg)", "url(img/r_eredin.jpg)", "url(img/v_bran.jpg)", "url(img/b_geralt.jpg)", "url(img/f_priscilla.jpg)", "url(img/g_moren.jpg)", "url(img/r_hound.jpg)", "url(img/v_crach.jpg)", "url(img/b_triss.jpg)", "url(img/f_roche.jpg)", "url(img/g_saskia.jpg)", "url(img/r_unseen.jpg)", "url(img/v_ermion.jpg)", "url(img/b_yennefer.jpg)"];
 
-/* let mainGame; let gameBoard
-
-let level; let cards; let points; */
+let pairs = 0; let moves = 0; let points = 0; let multiplier = 0;
 let minutes = 0; let seconds = 0;
+let firstClick; let firstClickImg;
 
 const mainMenu = document.querySelector('.mainMenu')
 const selectButtons = document.querySelectorAll('#level')
-
 const mainGame = document.querySelector('.mainGame')
 const gameBoard = document.querySelector('.gameBoard')
 const gameDetails = document.querySelectorAll('.gameDetails')
-
+const gameLevel = document.querySelector('.level')
 const gameTimer = document.querySelector('.timer')
+const gameMoves = document.querySelector('.moves')
+const gameScore = document.querySelector('.score')
 
 const restartInfo = document.querySelectorAll('#restart');
-const gameScore = document.querySelector('.score');
+restartInfo.forEach(button => button.addEventListener('click', () => {location.reload()}))
 
 const startGame = () => {
-  let modal = mainMenu.parentElement;
-
+  mainGame.style.display = "none"
+  let modal = mainMenu.parentElement
+  
   selectButtons.forEach(button => {
     button.addEventListener('click', () => {
       level = button.getAttribute('data-level')
@@ -34,55 +35,67 @@ const renderGame = (props) => {
   
   switch (level) {
     case "easy":
-      level = "easy ⭐"
-      cards = 16
+      /* 4x4 */
+      level = "EASY ⭐"
+      cards = 16 
+      pairs = cards/2
+      multiplier = 10
+      boardWidth = "30.5rem"
+      cardSize = "7rem"
       break;
 
     case "medium":
-      level = "medium ⭐⭐"
-      cards = 30
+      /* 5x6 */
+      level = "MEDIUM ⭐⭐"
+      cards = 30 
+      pairs = cards/2
+      multiplier = 20
+      boardWidth = "39.5rem"
+      cardSize = "6rem"
       break;
 
     case "hard":
-      level = "hard ⭐⭐⭐"
-      cards = 42
-      break;
-  
-    default:
+      /* 6x7 */
+      level = "HARD ⭐⭐⭐"
+      cards = 42 
+      pairs = cards/2
+      multiplier = 30
+      boardWidth = "39rem"
+      cardSize = "5rem"
       break;
   }
 
   setRandomData(database)
-  gameBoard.addEventListener('click', revealCard)
 
-  for(i=0; i<game_data.length; i++) {
-    const boardElement = `<div data-id=${i} class="gameCard play"><img src=${game_data[i]} alt=""></div>`         
+  for(i=0; i<randomArray.length; i++) {
+    const boardElement = `<div class="gameCard play" style="width:${cardSize}; height: ${cardSize};"><div class="front"></div><div class="back" style="background-image: ${randomArray[i]}"></div></div>` 
     gameBoard.insertAdjacentHTML('beforeend', boardElement);
   }
-
-  const gameLevel = gameDetails[0].firstElementChild
-  const gameRestart = gameDetails[0].lastElementChild
-  const gameTimer = gameDetails[1].firstElementChild
   
-  gameLevel.innerText = "Level: " + level
-  gameRestart.innerHTML = '<button id="restart" class="restart">Restart</button>'
-  gameTimer.innerText = "00:00"
+  mainGame.style.display = "block"
+  mainGame.style.width = boardWidth
 
+  gameLevel.innerText = level
+  gameTimer.innerText = "00:00"
+  gameMoves.innerText = "0 move count"
+  gameScore.innerText = "0 points"
+
+  gameBoard.addEventListener('click', revealCard)
   startTimer = setInterval(Timer, 1000);
 }
 
 const setRandomData = (database) => {
-  game_data = [...database, ...database];
-  let index = game_data.length, randomIndex;
+  gameDatabase = database.slice(0, pairs)
+  randomArray = [...gameDatabase, ...gameDatabase]
+  let index = randomArray.length, randomIndex
 
   while(index != 0) {
-    randomIndex = Math.floor(Math.random() * index);
-    index--;
-
-    [game_data[index], game_data[randomIndex]] = [game_data[randomIndex], game_data[index]]; 
+    randomIndex = Math.floor(Math.random() * index)
+    index--
+    [randomArray[index], randomArray[randomIndex]] = [randomArray[randomIndex], randomArray[index]];
   }
 
-  return game_data;
+  return randomArray
 }
 
 function Timer() {
@@ -98,76 +111,79 @@ function Timer() {
   minutes = minutes < 10 ? "0" + minutes : minutes;
   seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  gameTimer.innerHTML = `${minutes}:${seconds}`;
+  gameTimer.innerText = `${minutes}:${seconds}`;
 }
 
-// function after click on any card
 function revealCard(e) {
   if(e.target.parentNode.classList.contains('play')) { 
 
-    /* const cardId = game_data[e.target.parentNode.getAttribute('data-id')] */
-    const imgId = e.target.getAttribute('src')
+    clickedCard = e.target.parentNode
+    clickedCardImg = e.target.style.backgroundImage
 
-    console.log(cardId, imgId)
+    clickedCard.classList.remove('play')
+    clickedCard.classList.add('active')
 
-    const playerClick = e.target.children[0];
-    const gameCardId = playerClick.parentNode.getAttribute('data-id');
-
-    playerClick.src = game_data[gameCardId];
-    playerClick.parentNode.classList.toggle('play');
-    playerClick.parentNode.classList.toggle('active');
-    
-    // check selectedClick is exist?
-    if(!selectedClick) {
-      // (selectedClick don't exist) create them
-      selectedClick = playerClick;
+    if(!firstClick) {
+      firstClick = clickedCard;
+      firstClickImg = e.target.style.backgroundImage
       
     } else {
-      // (selectedClick exist) compare with second element
-      if(playerClick.src == selectedClick.src) { //image matched
-        board.removeEventListener('click', revealCard);
+      
+      if(firstClickImg === clickedCardImg) {
+        gameBoard.removeEventListener('click', revealCard);
+        firstClick.classList.add('shake');
+        clickedCard.classList.add('shake');
 
         setTimeout(() => {
-          board.addEventListener('click', revealCard);
-          selectedClick = undefined;
-        }, 300)
+          gameBoard.addEventListener('click', revealCard);
 
-        points=points+10;
-        score.innerHTML = `${points} points`;
-        leftPairs--;
+          firstClick.classList.remove('shake');
+          clickedCard.classList.remove('shake');
+
+          firstClick.classList.add('done');
+          clickedCard.classList.add('done');
+
+          firstClick = undefined;   
+        }, 1000)
+
+        moves+=1
+        points=points+multiplier;
+        gameScore.innerText = `${points} points`;
+        gameMoves.innerText = `${moves} move count`;
+
+        pairs--;
         checkWin();
 
-      } else { // not matched
-        board.removeEventListener('click', revealCard);
+      } else {
+        gameBoard.removeEventListener('click', revealCard);
 
         setTimeout(() => {
-          playerClick.src = "...";
-          selectedClick.src = "...";
+          gameBoard.addEventListener('click', revealCard);
 
-          playerClick.parentNode.classList.toggle('play');
-          playerClick.parentNode.classList.toggle('active');
+          firstClick.classList.remove('active');
+          clickedCard.classList.remove('active');
 
-          selectedClick.parentNode.classList.toggle('play');
-          selectedClick.parentNode.classList.toggle('active');
-          selectedClick = undefined;
+          firstClick.classList.add('play');
+          clickedCard.classList.add('play');
 
-          board.addEventListener('click', revealCard);
-        }, 300)
+          firstClick = undefined;
+        }, 500)
 
-        points>0 ? points=points-2 : null;
-        score.innerHTML = `${points} points`;
+        moves+=1
+        points > 0 ? points = points - 2 : null;
+        gameScore.innerText = `${points} points`;
+        gameMoves.innerText = `${moves} move count`;
       }
     }
    } 
 }
 
-
-
-// check win
-function checkWin() {
-  if(leftPairs == 0) {
+const checkWin = () => {
+  if(pairs === 0) {
+    modal = mainMenu.parentElement
     modal.style.display = 'flex';
-    modal.children[0].firstElementChild.innerHTML = `You scored ${points} points in ${minutes}:${seconds}, congratulations!🎉`;
-    clearInterval(time);
+
+    mainMenu.innerHTML = `<p>You earned <span class="points">${points} points</span> in <span class="result">${minutes}:${seconds}</span> and <span class="result">${moves} moves</span>, congratulations!🎉</p><button class="again" onclick="window.location.reload()">Play again</button>`
+    stopTimer = clearInterval(startTimer);
   }
 }
