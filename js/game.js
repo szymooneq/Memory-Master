@@ -1,7 +1,8 @@
 let database = ["url(img/b_ciri.jpg)", "url(img/f_foltest.jpg)", "url(img/g_braen.jpg)", "url(img/r_detlaff.jpg)", "url(img/v_bear.jpg)", "url(img/b_dandelion.jpg)", "url(img/f_keira.jpg)", "url(img/g_francesca.jpg)", "url(img/r_eredin.jpg)", "url(img/v_bran.jpg)", "url(img/b_geralt.jpg)", "url(img/f_priscilla.jpg)", "url(img/g_moren.jpg)", "url(img/r_hound.jpg)", "url(img/v_crach.jpg)", "url(img/b_triss.jpg)", "url(img/f_roche.jpg)", "url(img/g_saskia.jpg)", "url(img/r_unseen.jpg)", "url(img/v_ermion.jpg)", "url(img/b_yennefer.jpg)"];
 
+let gameDatabase = []; let randomArray = [];
 let pairs = 0; let moves = 0; let points = 0; let multiplier = 0;
-let minutes = 0; let seconds = 0;
+let minutes = 0; let seconds = 0; let startTimer;
 let firstClick; let firstClickImg;
 
 const mainMenu = document.querySelector('.mainMenu')
@@ -23,7 +24,7 @@ const startGame = () => {
   
   selectButtons.forEach(button => {
     button.addEventListener('click', () => {
-      level = button.getAttribute('data-level')
+      let level = button.getAttribute('data-level')
       modal.style.display="none"
       renderGame(level)
     })})
@@ -32,6 +33,9 @@ startGame()
 
 const renderGame = (props) => {
   level = props
+  let cards
+  let boardWidth
+  let cardSize
   
   switch (level) {
     case "easy":
@@ -67,7 +71,7 @@ const renderGame = (props) => {
 
   setRandomData(database)
 
-  for(i=0; i<randomArray.length; i++) {
+  for(let i=0; i<randomArray.length; i++) {
     const boardElement = `<div class="gameCard play" style="width:${cardSize}; height: ${cardSize};"><div class="front"></div><div class="back" style="background-image: ${randomArray[i]}"></div></div>` 
     gameBoard.insertAdjacentHTML('beforeend', boardElement);
   }
@@ -117,8 +121,8 @@ function Timer() {
 function revealCard(e) {
   if(e.target.parentNode.classList.contains('play')) { 
 
-    clickedCard = e.target.parentNode
-    clickedCardImg = e.target.style.backgroundImage
+    let clickedCard = e.target.parentNode
+    let clickedCardImg = e.target.style.backgroundImage
 
     clickedCard.classList.remove('play')
     clickedCard.classList.add('active')
