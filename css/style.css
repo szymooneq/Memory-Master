@@ -1,5 +1,14 @@
 @import url('https://rsms.me/inter/inter.css');
 
+:root {
+  --easy-board-size: 30.5rem;
+  --easy-card-size: 7rem;
+  --medium-board-size: 39.5rem;
+  --medium-card-size: 6rem;
+  --hard-board-size: 39rem;
+  --hard-card-size: 5rem;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -139,7 +148,7 @@ header h1 {
 }
 
 .shake {
-  animation: shakeAnimation 0.9s /* cubic-bezier(.36,.07,.19,.97) */;
+  animation: shakeAnimation 0.9s;
   backface-visibility: hidden;
 }
 
@@ -172,7 +181,6 @@ header h1 {
 
 .gameCard:hover .front {
   opacity: 1;
-  cursor: pointer;
 }
 
 .back {
@@ -190,11 +198,12 @@ header h1 {
 .back {
   display: block;
   transition-property: transform, opacity;
-  transition-duration: .5s;
+  transition-duration: .6s;
   transition-timing-function: cubic-bezier(.175, .885, .32, 1.275);
 }
 
 .gameCard.active .front {
+  opacity: 0;
   transform: rotateY(180deg);
 }
 
@@ -259,4 +268,19 @@ header h1 {
 
 .footer a:hover {
   color: white;
+}
+
+@media (max-width: 650px) {
+  :root {
+    --easy-board-size: 22rem;
+    --easy-card-size: 5.1rem;
+    --medium-board-size: 22rem;
+    --medium-card-size: 4.05rem;
+    --hard-board-size: 22rem;
+    --hard-card-size: 3.3rem;
+  }
+
+  .gameBoard {
+    gap: 0.3rem;
+  }
 }

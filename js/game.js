@@ -43,8 +43,8 @@ const renderGame = (props) => {
       cards = 16 
       pairs = cards/2
       multiplier = 10
-      boardWidth = "30.5rem"
-      cardSize = "7rem"
+      boardWidth = "var(--easy-board-size)"
+      cardSize = "var(--easy-card-size)"
       break;
 
     case "medium":
@@ -53,8 +53,8 @@ const renderGame = (props) => {
       cards = 30 
       pairs = cards/2
       multiplier = 20
-      boardWidth = "39.5rem"
-      cardSize = "6rem"
+      boardWidth = "var(--medium-board-size)"
+      cardSize = "var(--medium-card-size)"
       break;
 
     case "hard":
@@ -63,8 +63,8 @@ const renderGame = (props) => {
       cards = 42 
       pairs = cards/2
       multiplier = 30
-      boardWidth = "39rem"
-      cardSize = "5rem"
+      boardWidth = "var(--hard-board-size)"
+      cardSize = "var(--hard-card-size)"
       break;
 
     default:
@@ -173,7 +173,7 @@ function revealCard(e) {
           clickedCard.classList.add('play');
 
           firstClick = undefined;
-        }, 500)
+        }, 600)
 
         moves+=1
         if(points > 0) points = points - 2
