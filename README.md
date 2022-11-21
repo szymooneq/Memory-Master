@@ -1,7 +1,7 @@
 # Memory Master
-![tutorial thumbnail](./assets/memoryMaster.jpg)
+![tutorial thumbnail](./assets/_thumbnail.jpg)
 
-Memory Master is a game where you have to match all images to win.
+Memory Master is a simple game where you have to match all images to win.
 
 https://memory-master-sd.vercel.app/
 
@@ -12,17 +12,16 @@ https://memory-master-sd.vercel.app/
 
 ## Details
 - simple game build with vanilla JavaScript
-- flex layout
 - DOM manipulation
+- grid layout
 - CSS animations
 
 ## Tutorial and project structure
 Inside of project, you'll see the following folders and files:
 
 ```
-PROJECT_ROOT        # index files
-├── assets          # images
-└── styles          # styles files
+PROJECT_ROOT        # main files
+└── assets          # icons and images
 ```
 
 You can download the repository to your local machine and run with **Live Server** extension on your local machine.
