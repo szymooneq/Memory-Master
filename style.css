@@ -79,7 +79,8 @@ h1 {
   transition: all .2s;
 }
 
-.menuButton:hover {
+.menuButton:hover,
+.menuButton:focus {
   color: black;
   cursor: pointer;
 }
@@ -88,7 +89,8 @@ h1 {
   border-color: green;
 }
 
-.menuButton[data-level="easy"]:hover {
+.menuButton[data-level="easy"]:hover,
+.menuButton[data-level="easy"]:focus {
   background-color: green;
 }
 
@@ -96,14 +98,16 @@ h1 {
   border-color: orange;
 }
 
-.menuButton[data-level="medium"]:hover {
+.menuButton[data-level="medium"]:hover,
+.menuButton[data-level="medium"]:focus {
   background-color: orange;
 }
 .menuButton[data-level="hard"] {
   border-color: red;
 }
 
-.menuButton[data-level="hard"]:hover {
+.menuButton[data-level="hard"]:hover,
+.menuButton[data-level="hard"]:focus {
   background-color: red;
 }
 
@@ -129,11 +133,13 @@ h1 {
   position: relative;
 }
 
-.gameCard:hover {
+.gameCard:hover,
+.gameCard:focus {
   cursor: pointer;
 }
 
-.gameCard.active:hover {
+.gameCard.active:hover,
+.gameCard.active:focus {
   cursor: default;
 }
 
@@ -144,7 +150,8 @@ h1 {
   transform: rotateY(0deg);
 }
 
-.gameCard:hover .front {
+.gameCard:hover .front,
+.gameCard:focus .front {
   opacity: 1;
 }
 
@@ -224,7 +231,8 @@ h1 {
   transition: all .3s;
 }
 
-.reset:hover {
+.reset:hover,
+.reset:focus {
   color: black;
   background-color: dodgerblue;
   cursor: pointer;
@@ -241,7 +249,8 @@ h1 {
   transition: all .2s;
 }
 
-.playAgain:hover {
+.playAgain:hover,
+.playAgain:focus {
   color: black;
   background-color: #ffa600;
   cursor: pointer;
@@ -262,7 +271,8 @@ a {
   text-decoration: none;
 }
 
-a:hover {
+a:hover,
+a:focus {
   text-decoration: underline;
 }
 
