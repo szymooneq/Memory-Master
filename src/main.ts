@@ -131,13 +131,12 @@ const revealCard = (e: Event) => {
 			MOVES += 1;
 			gameScore.innerText = `${POINTS} points`;
 			gameMoves.innerText = `${MOVES} move count`;
-			PAIRS === 0 && endGame();
+			if (PAIRS === 0) endGame();
 		}
 	}
 };
 
 const endGame = () => {
-	if (PAIRS === 0) return;
 	const modalContent = modal.firstElementChild!;
 	modal.style.display = 'flex';
 	modalContent.innerHTML = `
