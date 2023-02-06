@@ -2,9 +2,9 @@
 
 ![tutorial thumbnail](./src/assets/_thumbnail.jpg)
 
-Memory Master is a simple game where you have to match all images to win.
+The game where you have to match all the images to win. Created with TypeScript and DOM manipulation.
 
-https://memory-master-sd.vercel.app/
+https://memory-master-sd.vercel.app
 
 ## Main technologies
 
@@ -16,18 +16,35 @@ https://memory-master-sd.vercel.app/
 
 ## Details
 
-- simple game build with vanilla JavaScript
+- created with JavaScript and TypeScript
 - DOM manipulation
 - grid layout
+- styling with SASS
 - CSS animations
 
 ## Tutorial and project structure
 
-Inside of project, you'll see the following folders and files:
+Inside the project you'll see the following folders and files:
 
 ```
 PROJECT_ROOT        # main files
 └── assets          # icons and images
 ```
 
-You can download the repository to your local machine and run with **Live Server** extension on your local machine.
+Download the repository to your local machine and run to download all missing dependencies:
+
+```
+yarn install
+```
+
+After that you can run this project with:
+
+```
+yarn dev
+```
+
+To build your application use:
+
+```
+yarn build
+```
